@@ -87,46 +87,42 @@ function App() {
     setMenuItem(newList);
   };
   return (
-    <>
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">品項</th>
-            <th scope="col">描述</th>
-            <th scope="col">價格</th>
-            <th scope="col">庫存</th>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">品項</th>
+          <th scope="col">描述</th>
+          <th scope="col">價格</th>
+          <th scope="col">庫存</th>
+        </tr>
+      </thead>
+      <tbody>
+        {menuItem.map((item) => (
+          <tr key={item.id}>
+            <td>
+              {toggle ? (
+                <input
+                  type="text"
+                  value={item.title}
+                  onChange={(e) => handleChangeTitle(e, item.id)}
+                  style={{ width: `80px` }}
+                  onBlur={() => setToggle(!toggle)}
+                />
+              ) : (
+                <span onClick={() => setToggle(!toggle)}>{item.title}</span>
+              )}
+            </td>
+            <td>{item.description}</td>
+            <td>{item.price}</td>
+            <button onClick={() => handleUpdateStock(item.id, "minus")}>
+              -
+            </button>
+            <td>{item.stock}</td>
+            <button onClick={() => handleUpdateStock(item.id, "add")}>+</button>
           </tr>
-        </thead>
-        <tbody>
-          {menuItem.map((item) => (
-            <tr key={item.id}>
-              <td>
-                {toggle ? (
-                  <input
-                    type="text"
-                    value={item.title}
-                    onChange={(e) => handleChangeTitle(e, item.id)}
-                    style={{ width: `80px` }}
-                    onBlur={() => setToggle(!toggle)}
-                  />
-                ) : (
-                  <span onClick={() => setToggle(!toggle)}>{item.title}</span>
-                )}
-              </td>
-              <td>{item.description}</td>
-              <td>{item.price}</td>
-              <button onClick={() => handleUpdateStock(item.id, "minus")}>
-                -
-              </button>
-              <td>{item.stock}</td>
-              <button onClick={() => handleUpdateStock(item.id, "add")}>
-                +
-              </button>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
